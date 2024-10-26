@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../ShoeForm/Shoe.css';
 
 const AccountForm = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();

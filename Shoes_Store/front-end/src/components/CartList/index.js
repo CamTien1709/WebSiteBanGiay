@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //import styles from './CustomerList.module.scss';
+import '../CategoryList/Category.css';
 
 const CartList = () => {
     const [carts, setCart] = useState([]);

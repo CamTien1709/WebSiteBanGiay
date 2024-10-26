@@ -10,6 +10,8 @@ import CategoryList from "./components/CategoryList";
 import CategoryForm from "./components/CategoryForm";
 import ColorList from "./components/ColorList";
 import ColorForm from "./components/ColorForm";
+import ShoeList from "./components/ShoeList";
+import ShoeForm from "./components/ShoeForm";
 
 const App = () => (
     <Router>
@@ -33,6 +35,10 @@ const App = () => (
             <Route path="/colors" element={<ColorList/>}/>
             <Route path="/colors/new" element={<ColorForm/>}/>
             <Route path="/colors/edit/:colorId" element={<ColorForm/>}/>
+
+            <Route path="/shoes" element={<ShoeList/>}/>
+            <Route path="/shoes/new" element={<ShoeForm/>}/>
+            <Route path="/shoes/edit/:shoeId" element={<ShoeForm/>}/>
         </Routes>
     </Router>
 );

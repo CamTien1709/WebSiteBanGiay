@@ -3,43 +3,43 @@ import axios from 'axios';
 import { useNavigate , Link} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Category.css';
-import account from '../../assets/images/account.png';
+import '../CategoryList/Category.css';
 import cart from '../../assets/images/cart.jpg';
 import shoe from '../../assets/images/shoe.png';
 import customer from '../../assets/images/customer.png';
+import account from '../../assets/images/account.png';
 import category from '../../assets/images/category.png';
 
 
-const CategoryList = () => {
-    const [categories, setCategories] = useState([]);
+const ShoeList = () => {
+    const [shoes, setShoes] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/categories/getAll')
-            .then(response => setCategories(response.data))
-            .catch(error => console.error('Error fetching categories:', error));
+        axios.get('http://localhost:8080/shoes/getAll')
+            .then(response => setShoes(response.data))
+            .catch(error => console.error('Error fetching Shoe:', error));
     }, []);
 
-    const handleEdit = (categoryId) => {
-        navigate(`/categories/edit/${categoryId}`);
+    const handleEdit = (shoesId) => {
+        navigate(`/shoes/edit/${shoesId}`);
     };
 
-    const handleDelete = (categoryId) => {
-        if (window.confirm('Are you sure you want to delete this category?')) {
-            axios.delete(`http://localhost:8080/categories/delete/${categoryId}`)
+    const handleDelete = (shoesId) => {
+        if (window.confirm('Are you sure you want to delete this shoes?')) {
+            axios.delete(`http://localhost:8080/shoes/delete/${shoesId}`)
                 .then(() => {
-                    setCategories(categories.filter(category => category.categoryId !== categoryId));
-                    toast.success('Category deleted successfully!');
+                    setShoes(shoes.filter(shoe => shoe.shoeId !== shoesId));
+                    toast.success('Shoe deleted successfully!');
                 })
-                .catch(error => console.error('Error deleting category:', error));
+                .catch(error => console.error('Error deleting Shoe:', error));
         }
     };
 
-    const filteredCategories = categories.filter(category =>
-        category.categoryName.includes(searchQuery) ||
-        category.categoryId.toString().includes(searchQuery.toString())
+    const filteredShoe = shoes.filter(shoe =>
+        shoe.name.includes(searchQuery) ||
+        shoe.shoesId.toString().includes(searchQuery.toString())
     );
 
     return (
@@ -64,7 +64,7 @@ const CategoryList = () => {
                 </div>
             </div>
             <div className="container mt-5">
-                <h2>Category List</h2>
+                <h2>Shoes List</h2>
                 <div className="">
                     <div className="search">
                         <input
@@ -74,31 +74,44 @@ const CategoryList = () => {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
-
                     </div>
-                    <button className="btn-new" onClick={() => navigate('/categories/new')}>Add New Category
+                    <button className="btn-new" onClick={() => navigate('/shoes/new')}>Add New Medicine
                     </button>
                 </div>
 
                 <table className="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Category ID</th>
-                        <th>Category Name</th>
+                        <th style={{width: '30px', height: '50px'}}>ID</th>
+                        <th>Name</th>
+                        <th style={{width: '30px', height: '50px'}}>Category ID</th>
+                        <th style={{width: '30px', height: '50px'}}>Manufacture ID</th>
+                        <th>Price</th>
+                        <th style={{width: '30px', height: '50px'}}>Quantity</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Color</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredCategories.map(category => (
-                        <tr key={category.categoryId}>
-                            <td>{category.categoryId}</td>
-                            <td>{category.categoryName}</td>
+                    {filteredShoe.map(shoe => (
+                        <tr key={shoe.shoesId}>
+                            <td>{shoe.shoesId}</td>
+                            <td>{shoe.name}</td>
+                            <td>{shoe.categoryId}</td>
+                            <td>{shoe.manufacturerId}</td>
+                            <td>${shoe.price}</td>
+                            <td>{shoe.stockQuantity}</td>
+                            <td>{shoe.description}</td>
+                            <td>{shoe.size}</td>
+                            <td>{shoe.colorId}</td>
                             <td>
                                 <button className="btn btn-warning me-2"
-                                        onClick={() => handleEdit(category.categoryId)}>Edit
+                                        onClick={() => handleEdit(shoe.shoesId)}>Edit
                                 </button>
                                 <button className="btn btn-danger"
-                                        onClick={() => handleDelete(category.categoryId)}>Delete
+                                        onClick={() => handleDelete(shoe.shoesId)}>Delete
                                 </button>
                             </td>
                         </tr>
@@ -111,4 +124,4 @@ const CategoryList = () => {
     );
 };
 
-export default CategoryList;
+export default ShoeList;
